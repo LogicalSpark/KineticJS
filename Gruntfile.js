@@ -1,4 +1,8 @@
 module.exports = function(grunt) {
+
+  var serveStatic = require('serve-static');
+  var serveIndex = require('serve-index');
+
   var sourceFiles = [
     // core
     'src/Global.js',
@@ -266,10 +270,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('server', 'run local server and create dev version', function() {
     grunt.task.run('dev');
-    var connect = require('connect');
-    connect.createServer(
-        connect.static(__dirname)
-    ).listen(8080);
+    var connect = require('connect'); 
+    connect().use(serveStatic(__dirname)).listen(8080);
     grunt.task.run('watch:dev');
     grunt.log.writeln('Tests server starts on http://localhost:8080/test/runner.html');
   });
